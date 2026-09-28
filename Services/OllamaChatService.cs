@@ -27,7 +27,8 @@ public sealed class OllamaChatService(HttpClient httpClient, IConfiguration conf
         var trainingMessages = messages
             .Append(new OllamaChatMessage("assistant", assistantMessage))
             .ToArray();
-        var trainingDirectory = Path.Combine(environment.ContentRootPath, "App_Data");
+        var appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        var trainingDirectory = Path.Combine(appDataFolder, "NioChat", "App_Data");
         Directory.CreateDirectory(trainingDirectory);
         var trainingRecord = new
         {
