@@ -1,20 +1,38 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<base href="/" />
 	<ResourcePreloader />
-	<link rel="stylesheet" href="@Assets["lib/bootstrap/dist/css/bootstrap.min.css"]" />
-	<link rel="stylesheet" href="@Assets["app.css"]" />
-	<link rel="stylesheet" href="@Assets["blazor.styles.css"]" />
+	<link rel="stylesheet" href="@GetAsset("lib/bootstrap/dist/css/bootstrap.min.css")" />
+	<link rel="stylesheet" href="@GetAsset("app.css")" />
+	<link rel="stylesheet" href="@GetAsset("NioChat.styles.css")" />
 	<ImportMap />
 	<HeadOutlet />
 </head>
 <body>
 	<Routes @rendermode="InteractiveServer" />
 	<ReconnectModal />
-	<script src="chat-storage.js"></script>
-	<script src="@Assets["_framework/blazor.web.js"]"></script>
+	<script src="nio-storage.js"></script>
+	<script src="_framework/blazor.web.js"></script>
 </body>
 </html>
+
+@code {
+    private string GetAsset(string key)
+    {
+        try
+        {
+            if (Assets != null)
+            {
+                var val = Assets[key];
+                if (!string.IsNullOrEmpty(val)) return val;
+            }
+        }
+        catch
+        {
+        }
+        return key;
+    }
+}

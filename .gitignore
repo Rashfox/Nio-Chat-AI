@@ -1,0 +1,40 @@
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio files
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+out/
+
+# Caches and logs
+*.log
+*.cache
+*.suo
+
+# Local testing and debug
+Testing/
+*.test
+TestResults/
+coverage/
+
+# OS generated files
+.DS_Store
+Thumbs.db

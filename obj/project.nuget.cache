@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "i3w5gbgdWJU=",
+  "dgSpecHash": "V9Y8syp6hV0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\RASH\\Documents\\blazor\\blazor.csproj",
+  "projectFilePath": "C:\\Users\\RASH\\Documents\\Nio\\blazor.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\RASH\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.12\\microsoft.aspnetcore.app.internal.assets.10.0.12.nupkg.sha512"
+    "C:\\Users\\RASH\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.12\\microsoft.aspnetcore.app.internal.assets.10.0.12.nupkg.sha512",
+    "C:\\Users\\RASH\\.nuget\\packages\\photino.native\\4.0.22\\photino.native.4.0.22.nupkg.sha512",
+    "C:\\Users\\RASH\\.nuget\\packages\\photino.net\\4.0.16\\photino.net.4.0.16.nupkg.sha512"
   ],
   "logs": []
 }
