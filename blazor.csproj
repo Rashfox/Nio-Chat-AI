@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AssemblyName>NioChat</AssemblyName>
     <ApplicationIcon>app.ico</ApplicationIcon>
     <TargetFramework>net10.0</TargetFramework>
