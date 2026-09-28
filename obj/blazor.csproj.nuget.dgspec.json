@@ -8,7 +8,7 @@
       "version": "1.0.0",
       "restore": {
         "projectUniqueName": "C:\\Users\\RASH\\Documents\\Nio\\blazor.csproj",
-        "projectName": "blazor",
+        "projectName": "NioChat",
         "projectPath": "C:\\Users\\RASH\\Documents\\Nio\\blazor.csproj",
         "packagesPath": "C:\\Users\\RASH\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\RASH\\Documents\\Nio\\obj\\",
@@ -53,6 +53,10 @@
               "target": "Package",
               "version": "[10.0.12, )",
               "autoReferenced": true
+            },
+            "Photino.NET": {
+              "target": "Package",
+              "version": "[4.0.16, )"
             }
           },
           "imports": [

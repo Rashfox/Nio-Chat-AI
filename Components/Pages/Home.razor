@@ -1,4 +1,4 @@
-﻿@page "/"
+@page "/"
 @using System.Net.Http.Json
 @using Microsoft.AspNetCore.Components
 @using blazor.Services
@@ -36,7 +36,7 @@
 	<header class="chat-header">
 		<div class="brand-lockup">
 			<button class="menu-button" type="button" @onclick="ToggleSidebar" aria-label="Buka riwayat chat">☰</button>
-			<div class="brand-mark">O</div>
+			<img src="favicon.png" alt="Nio Logo" class="brand-mark" style="width: 36px; height: 36px; object-fit: contain; border-radius: 50%;" />
 			<div>
 				<div class="eyebrow">LOCAL INTELLIGENCE</div>
 				<h1>Nio Chat</h1>
@@ -131,11 +131,20 @@
 	{
 		if (firstRender)
 		{
-			var savedSessions = await JS.InvokeAsync<ChatSession[]?>("chatStorage.load");
-			if (savedSessions is { Length: > 0 })
+			try
 			{
-				sessions.AddRange(savedSessions);
+				isDarkMode = await JS.InvokeAsync<bool>("chatStorage.loadTheme");
 			}
+			catch { }
+			try
+			{
+				var savedSessions = await JS.InvokeAsync<ChatSession[]?>("chatStorage.load");
+				if (savedSessions is { Length: > 0 })
+				{
+					sessions.AddRange(savedSessions);
+				}
+			}
+			catch { }
 
 			CreateEmptySession();
 			StateHasChanged();
@@ -238,9 +247,14 @@
         activePrompts = availablePrompts.OrderBy(_ => Guid.NewGuid()).Take(3).ToList();
     }
 
-	private void ToggleTheme()
+	private async Task ToggleTheme()
 	{
 		isDarkMode = !isDarkMode;
+		try
+		{
+			await JS.InvokeVoidAsync("chatStorage.saveTheme", isDarkMode);
+		}
+		catch { }
 	}
 
 	private async Task StartNewChat()

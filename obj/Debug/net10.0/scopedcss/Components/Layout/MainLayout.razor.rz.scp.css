@@ -1,15 +1,15 @@
-.page[b-ulia7pknpw] {
+.page[b-xm6dn9jag4] {
     position: relative;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-main[b-ulia7pknpw] {
+main[b-xm6dn9jag4] {
     flex: 1;
 }
 
-#blazor-error-ui[b-ulia7pknpw] {
+#blazor-error-ui[b-xm6dn9jag4] {
     color-scheme: light only;
     background: lightyellow;
     bottom: 0;
@@ -23,7 +23,7 @@ main[b-ulia7pknpw] {
     z-index: 1000;
 }
 
-    #blazor-error-ui .dismiss[b-ulia7pknpw] {
+    #blazor-error-ui .dismiss[b-xm6dn9jag4] {
         cursor: pointer;
         position: absolute;
         right: 0.75rem;
