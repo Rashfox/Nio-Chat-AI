@@ -25,12 +25,14 @@ Berisi source code murni untuk aplikasi **Nio Chat Web-based**.
 
 Jika kamu hanya ingin menggunakan aplikasinya tanpa melakukan kompilasi kode:
 
-1. Buka halaman **[Releases](../../releases)**.
+1. Buka halaman **[Releases](../../releases)** pada repository ini.
 2. Download file Installer terbaru (contoh: `NioChatSetup.exe`).
 3. Jalankan file `.exe` tersebut dan ikuti petunjuk instalasinya.
 4. Buka aplikasi dari Shortcut di Desktop atau Start Menu.
 
-> **Catatan:** Pastikan kamu sudah menginstall Ollama dan mem-pull model Nio dengan menjalankan perintah `ollama pull rash5679/nio` di terminal sebelum menggunakan aplikasi ini.
+> **Catatan Penting:** 
+> - File Installer (`NioChatSetup.exe`) yang berukuran besar **TIDAK DISIMPAN** di dalam file source code (di branch manapun) untuk menjaga repositori tetap bersih. Kamu harus mendownloadnya lewat halaman **Releases**.
+> - Pastikan kamu sudah menginstall Ollama dan mem-pull model Nio dengan menjalankan perintah `ollama pull rash5679/nio` di terminal sebelum menggunakan aplikasi ini.
 
 ---
 
