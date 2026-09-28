@@ -2,12 +2,23 @@ using Photino.NET;
 using System.Diagnostics;
 using blazor.Components;
 using blazor.Services;
+using System.Runtime.InteropServices;
 
 class Program
 {
+    [DllImport("kernel32.dll")]
+    static extern IntPtr GetConsoleWindow();
+
+    [DllImport("user32.dll")]
+    static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+    const int SW_HIDE = 0;
+
     [STAThread]
     static void Main(string[] args)
     {
+        var handle = GetConsoleWindow();
+        ShowWindow(handle, SW_HIDE);
         // Auto-start Ollama if it's not running
         var ollamaProcesses = Process.GetProcessesByName("ollama");
         if (ollamaProcesses.Length == 0)
@@ -30,15 +41,12 @@ class Program
             }
         }
 
-        var builder = WebApplication.CreateBuilder(new WebApplicationOptions
-        {
-            Args = args,
-            ContentRootPath = AppContext.BaseDirectory
-        });
+        var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
 
+        builder.Services.AddSingleton<ChatStorageService>();
         builder.Services.AddHttpClient<OllamaChatService>((serviceProvider, client) =>
         {
             var configuration = serviceProvider.GetRequiredService<IConfiguration>();
@@ -51,12 +59,11 @@ class Program
         if (!app.Environment.IsDevelopment())
         {
             app.UseExceptionHandler("/Error", createScopeForErrors: true);
-            app.UseHsts();
-            app.UseHttpsRedirection();
         }
 
         app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
         app.UseAntiforgery();
+        app.UseStaticFiles();
         app.MapStaticAssets();
         app.MapRazorComponents<App>()
             .AddInteractiveServerRenderMode();
@@ -68,15 +75,21 @@ class Program
         string appUrl = app.Urls.FirstOrDefault() ?? "http://127.0.0.1:5000";
 
         // Create the native Desktop Window
-        var window = new PhotinoWindow()
-            .SetTitle("Nio AI Chat")
-            .SetIconFile("app.ico")
-            .SetUseOsDefaultSize(false)
-            .SetSize(1400, 900)
-            .Center()
-            .Load(appUrl);
-
-        // Wait for the user to close the window
-        window.WaitForClose();
+        try
+        {
+            var icoPath = Path.Combine(AppContext.BaseDirectory, "app.ico");
+            var window = new PhotinoWindow()
+                .SetTitle("Nio AI Chat")
+                .SetIconFile(icoPath)
+                .SetUseOsDefaultSize(false)
+                .SetSize(1400, 900)
+                .Center()
+                .Load(appUrl);
+            window.WaitForClose();
+        }
+        catch (Exception ex)
+        {
+            System.IO.File.WriteAllText("crash.txt", ex.ToString());
+        }
     }
 }

@@ -5,6 +5,7 @@
 @implements IAsyncDisposable
 @inject IJSRuntime JS
 @inject OllamaChatService ChatService
+@inject ChatStorageService StorageService
 
 <PageTitle>Nio Chat</PageTitle>
 
@@ -136,15 +137,17 @@
 				isDarkMode = await JS.InvokeAsync<bool>("chatStorage.loadTheme");
 			}
 			catch { }
-			try
+
+			// Load history dari file (permanen, tidak bergantung pada cache WebView2)
+			var savedSessions = StorageService.LoadSessions();
+			if (savedSessions.Count > 0)
 			{
-				var savedSessions = await JS.InvokeAsync<ChatSession[]?>("chatStorage.load");
-				if (savedSessions is { Length: > 0 })
+				foreach (var s in savedSessions)
 				{
-					sessions.AddRange(savedSessions);
+					var msgs = s.Messages.Select(m => new ChatMessage(m.Role, m.Content)).ToList();
+					sessions.Add(new ChatSession(s.Id, s.Title, s.UpdatedAt, msgs));
 				}
 			}
-			catch { }
 
 			CreateEmptySession();
 			StateHasChanged();
@@ -277,7 +280,17 @@
 	private async Task SaveHistory()
 	{
 		hasSavedHistory = messages.Count > 0;
-		await JS.InvokeVoidAsync("chatStorage.save", sessions);
+		// Simpan ke file di %AppData%\NioChat\history.json (permanen)
+		var data = sessions
+			.Where(s => s.Messages.Count > 0)
+			.Select(s => new ChatSessionData
+			{
+				Id = s.Id,
+				Title = s.Title,
+				UpdatedAt = s.UpdatedAt,
+				Messages = s.Messages.Select(m => new ChatMessageData { Role = m.Role, Content = m.Content }).ToList()
+			}).ToList();
+		StorageService.SaveSessions(data);
 	}
 
 	private void CreateSession(string firstMessage)

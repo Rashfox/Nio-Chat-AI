@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AssemblyName>NioChat</AssemblyName>
     <ApplicationIcon>app.ico</ApplicationIcon>
     <TargetFramework>net10.0</TargetFramework>
@@ -9,11 +9,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
   </PropertyGroup>
-
-  <PropertyGroup>
-    <DefaultItemExcludes>$(DefaultItemExcludes);publish\**</DefaultItemExcludes>
-  </PropertyGroup>
-
+  <ItemGroup>
+    <None Update="app.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Photino.NET" Version="4.0.16" />
   </ItemGroup>
