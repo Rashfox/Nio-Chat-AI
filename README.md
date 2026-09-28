@@ -21,6 +21,18 @@ Berisi source code murni untuk aplikasi **Nio Chat Web-based**.
 
 ---
 
+## 📋 Prasyarat System (Prerequisites)
+
+Sebelum menjalankan atau menginstal Nio Chat, pastikan sistem kamu sudah memenuhi prasyarat berikut:
+
+1. **Ollama**: Pastikan Ollama sudah terinstall dan berjalan di komputer kamu. Jika belum, unduh dari [ollama.com](https://ollama.com).
+2. **Model Nio AI**: Unduh model kustom `rash5679/nio` melalui terminal / command prompt dengan menjalankan perintah:
+
+   ```bash
+   ollama run rash5679/nio
+
+---
+
 ## 📥 Cara Instalasi / Download (Untuk Pengguna Biasa)
 
 Jika kamu hanya ingin menggunakan aplikasinya tanpa melakukan kompilasi kode:
