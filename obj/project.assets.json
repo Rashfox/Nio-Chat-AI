@@ -50,11 +50,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\RASH\\Documents\\blazor\\blazor.csproj",
+      "projectUniqueName": "C:\\Users\\RASH\\Documents\\Nio\\blazor.csproj",
       "projectName": "blazor",
-      "projectPath": "C:\\Users\\RASH\\Documents\\blazor\\blazor.csproj",
+      "projectPath": "C:\\Users\\RASH\\Documents\\Nio\\blazor.csproj",
       "packagesPath": "C:\\Users\\RASH\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\RASH\\Documents\\blazor\\obj\\",
+      "outputPath": "C:\\Users\\RASH\\Documents\\Nio\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\RASH\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "i3w5gbgdWJU=",
+  "dgSpecHash": "pSYJr84N1S4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\RASH\\Documents\\blazor\\blazor.csproj",
+  "projectFilePath": "C:\\Users\\RASH\\Documents\\Nio\\blazor.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\RASH\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.12\\microsoft.aspnetcore.app.internal.assets.10.0.12.nupkg.sha512"
   ],
