@@ -29,7 +29,7 @@ Sebelum menjalankan atau menginstal Nio Chat, pastikan sistem kamu sudah memenuh
 2. **Model Nio AI**: Unduh model kustom `rash5679/nio` melalui terminal / command prompt dengan menjalankan perintah:
 
    ```bash
-   ollama run rash5679/nio
+   ollama pull rash5679/nio
 
 ---
 
