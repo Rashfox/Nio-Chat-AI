@@ -7,7 +7,7 @@ public sealed class OllamaChatService(HttpClient httpClient, IConfiguration conf
 {
     public async Task<string> SendAsync(IReadOnlyList<OllamaChatMessage> messages, CancellationToken cancellationToken = default)
     {
-        var model = configuration["Ollama:Model"] ?? "llama3.2";
+        var model = configuration["Ollama:Model"] ?? "rash5679/nio";
         var request = new
         {
             model,
