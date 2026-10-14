@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NioChat")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+23c6c0df4f0f2c555636d59de24dae3297457ed3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4b8e441517c3663f6fb8ffccae1860e9fe292ce3")]
 [assembly: System.Reflection.AssemblyProductAttribute("NioChat")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NioChat")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

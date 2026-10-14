@@ -5,7 +5,7 @@ Aplikasi ini dibangun menggunakan **Blazor Server** dan **Photino.NET** sehingga
 
 ## Prasyarat (Prerequisites)
 - .NET 10 SDK (jika ingin build sendiri dari source)
-- Ollama terinstall di komputer dengan model `rash5679/nio`
+- Ollama terinstall di komputer dengan model `rash5679/nio` (jalankan perintah `ollama run rash5679/nio`)
 
 ## Cara Instalasi dari Rilis (Disarankan)
 1. Buka halaman **[Releases](../../releases)** di repository ini.

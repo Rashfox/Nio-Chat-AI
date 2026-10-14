@@ -6,6 +6,7 @@
 @inject IJSRuntime JS
 @inject OllamaChatService ChatService
 @inject ChatStorageService StorageService
+@inject IConfiguration Configuration
 
 <PageTitle>Nio Chat</PageTitle>
 
@@ -114,7 +115,7 @@
 	private readonly List<ChatMessage> messages = [];
 	private readonly List<ChatSession> sessions = [];
 	private string draft = string.Empty;
-	private string modelName = "nio";
+	private string modelName => Configuration["Ollama:Model"] ?? "rash5679/nio";
 	private string? errorMessage;
 	private bool isDarkMode;
 	private bool isSending;

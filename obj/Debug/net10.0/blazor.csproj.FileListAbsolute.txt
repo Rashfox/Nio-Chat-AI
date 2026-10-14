@@ -78,7 +78,6 @@ C:\Users\RASH\Documents\Nio\obj\Debug\net10.0\compressed\pxia8is8ui-{0}-notf2xhc
 C:\Users\RASH\Documents\Nio\obj\Debug\net10.0\compressed\66indnxmik-{0}-h1s4sie4z3-h1s4sie4z3.gz
 C:\Users\RASH\Documents\Nio\obj\Debug\net10.0\compressed\ckgjguuulf-{0}-63fj8s7r0e-63fj8s7r0e.gz
 C:\Users\RASH\Documents\Nio\obj\Debug\net10.0\compressed\led67sbh3u-{0}-0j3bgjxly4-0j3bgjxly4.gz
-C:\Users\RASH\Documents\Nio\obj\Debug\net10.0\compressed\h4p08ptvx7-{0}-tssc6ndedx-tssc6ndedx.gz
 C:\Users\RASH\Documents\Nio\obj\Debug\net10.0\compressed\yjttorbkh3-{0}-abdmv1u4y3-abdmv1u4y3.gz
 C:\Users\RASH\Documents\Nio\obj\Debug\net10.0\compressed\ex72i6di43-{0}-r1mzr76kwy-r1mzr76kwy.gz
 C:\Users\RASH\Documents\Nio\obj\Debug\net10.0\compressed\8j6f88f8l4-{0}-r1mzr76kwy-r1mzr76kwy.gz
@@ -94,6 +93,4 @@ C:\Users\RASH\Documents\Nio\obj\Debug\net10.0\NioChat.pdb
 C:\Users\RASH\Documents\Nio\obj\Debug\net10.0\blazor.genruntimeconfig.cache
 C:\Users\RASH\Documents\Nio\obj\Debug\net10.0\ref\NioChat.dll
 C:\Users\RASH\Documents\Nio\obj\Debug\net10.0\compressed\qqyctt271c-{0}-qbq1tg5v4y-qbq1tg5v4y.gz
-C:\Users\RASH\Documents\Nio\obj\Debug\net10.0\NioChat.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\RASH\Documents\Nio\obj\Debug\net10.0\compressed\eb30ijab7v-{0}-9hsif5t8mt-9hsif5t8mt.gz
-C:\Users\RASH\Documents\Nio\obj\Debug\net10.0\compressed\g5bzgiumfw-{0}-dwu72t6gfx-dwu72t6gfx.gz
+C:\Users\RASH\Documents\Nio\bin\Debug\net10.0\app.ico

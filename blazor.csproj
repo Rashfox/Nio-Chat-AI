@@ -8,6 +8,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
+    <DefaultItemExcludes>$(DefaultItemExcludes);app_publish\**;installer\**</DefaultItemExcludes>
   </PropertyGroup>
   <ItemGroup>
     <None Update="app.ico">
