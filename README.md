@@ -5,7 +5,7 @@ Aplikasi ini dibangun menggunakan **ASP.NET Core (Blazor Web App)**. Berbeda den
 
 ## Prasyarat (Prerequisites)
 - .NET 10 SDK
-- Ollama dengan model `rash5679/nio` sudah terinstall dan berjalan (default di `http://localhost:11434`)
+- Ollama dengan model `rash5679/nio` sudah terinstall dan berjalan (default di `http://localhost:11434`, jalankan perintah `ollama run rash5679/nio`)
 
 ## Cara Menjalankan Aplikasi
 1. Clone branch ini:
@@ -17,10 +17,10 @@ Aplikasi ini dibangun menggunakan **ASP.NET Core (Blazor Web App)**. Berbeda den
    ```bash
    dotnet run
    ```
-3. Buka browser dan arahkan ke alamat URL yang tertera di terminal (contoq: `http://localhost:5000`).
+3. Buka browser dan arahkan ke alamat URL yang tertera di terminal (contoh: `http://localhost:5000`).
 
 ## Konfigurasi
-Aplikasi akan secara otomatis mencoba menghubungkan diri ke Ollama lokal di port standar. Jika ingin mengubahnya, kamu bisa menyesuaikan URL Ollama di `Program.cs`.
+Aplikasi akan secara otomatis mencoba menghubungkan diri ke Ollama lokal di port standar dengan model `rash5679/nio`. Jika ingin mengubahnya, kamu bisa menyesuaikan konfigurasi di `appsettings.json`.
 
 ---
 *Nio AI Chat - Smart & Local AI Assistant*
