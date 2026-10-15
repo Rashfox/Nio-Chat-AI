@@ -24,12 +24,35 @@ class Program
     [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
     static extern IntPtr LoadImage(IntPtr hinst, string lpszName, uint uType, int cxDesired, int cyDesired, uint fuLoad);
 
+    [DllImport("user32.dll")]
+    static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
+    delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+
+    [DllImport("user32.dll")]
+    static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+    [DllImport("user32.dll")]
+    static extern bool IsWindowVisible(IntPtr hWnd);
+
+    [DllImport("user32.dll", EntryPoint = "SetClassLongPtr")]
+    static extern IntPtr SetClassLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+    [DllImport("user32.dll", EntryPoint = "SetClassLong")]
+    static extern IntPtr SetClassLong32(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+    static IntPtr SetClassLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
+    {
+        return IntPtr.Size == 8 ? SetClassLongPtr64(hWnd, nIndex, dwNewLong) : SetClassLong32(hWnd, nIndex, dwNewLong);
+    }
+
     const int SW_HIDE = 0;
     const uint WM_SETICON = 0x0080;
     const int ICON_SMALL = 0;
     const int ICON_BIG = 1;
     const uint IMAGE_ICON = 1;
     const uint LR_LOADFROMFILE = 0x0010;
+    const int GCLP_HICON = -14;
+    const int GCLP_HICONSM = -34;
 
     [STAThread]
     static void Main(string[] args)
@@ -108,18 +131,42 @@ class Program
 
             Task.Run(async () =>
             {
-                for (int i = 0; i < 30; i++)
+                uint currentPid = (uint)Environment.ProcessId;
+                for (int i = 0; i < 40; i++)
                 {
-                    await Task.Delay(200);
-                    var hWnd = FindWindow(null, "Nio AI Chat");
-                    if (hWnd != IntPtr.Zero)
+                    await Task.Delay(250);
+                    IntPtr targetHwnd = IntPtr.Zero;
+
+                    EnumWindows((hWnd, lParam) =>
                     {
-                        if (File.Exists(icoPath))
+                        GetWindowThreadProcessId(hWnd, out uint pid);
+                        if (pid == currentPid && IsWindowVisible(hWnd))
                         {
-                            var hSmall = LoadImage(IntPtr.Zero, icoPath, IMAGE_ICON, 16, 16, LR_LOADFROMFILE);
-                            var hBig = LoadImage(IntPtr.Zero, icoPath, IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
-                            if (hSmall != IntPtr.Zero) SendMessage(hWnd, WM_SETICON, (IntPtr)ICON_SMALL, hSmall);
-                            if (hBig != IntPtr.Zero) SendMessage(hWnd, WM_SETICON, (IntPtr)ICON_BIG, hBig);
+                            targetHwnd = hWnd;
+                            return false;
+                        }
+                        return true;
+                    }, IntPtr.Zero);
+
+                    if (targetHwnd == IntPtr.Zero)
+                    {
+                        targetHwnd = FindWindow(null, "Nio Chat");
+                        if (targetHwnd == IntPtr.Zero) targetHwnd = FindWindow(null, "Nio AI Chat");
+                    }
+
+                    if (targetHwnd != IntPtr.Zero && File.Exists(icoPath))
+                    {
+                        var hSmall = LoadImage(IntPtr.Zero, icoPath, IMAGE_ICON, 16, 16, LR_LOADFROMFILE);
+                        var hBig = LoadImage(IntPtr.Zero, icoPath, IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
+                        if (hSmall != IntPtr.Zero)
+                        {
+                            SendMessage(targetHwnd, WM_SETICON, (IntPtr)ICON_SMALL, hSmall);
+                            try { SetClassLongPtr(targetHwnd, GCLP_HICONSM, hSmall); } catch { }
+                        }
+                        if (hBig != IntPtr.Zero)
+                        {
+                            SendMessage(targetHwnd, WM_SETICON, (IntPtr)ICON_BIG, hBig);
+                            try { SetClassLongPtr(targetHwnd, GCLP_HICON, hBig); } catch { }
                         }
                         break;
                     }
@@ -127,7 +174,7 @@ class Program
             });
 
             var window = new PhotinoWindow()
-                .SetTitle("Nio AI Chat")
+                .SetTitle("Nio Chat")
                 .SetIconFile(icoPath)
                 .SetUseOsDefaultSize(false)
                 .SetSize(1400, 900)
