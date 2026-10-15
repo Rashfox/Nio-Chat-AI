@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v10.0": {
-      "NioChat/1.0.0": {
+      "NioChat/1.0.1": {
         "dependencies": {
           "Photino.NET": "4.0.16"
         },
@@ -72,7 +72,7 @@
     }
   },
   "libraries": {
-    "NioChat/1.0.0": {
+    "NioChat/1.0.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -2,7 +2,7 @@
 ; Output: NioChatSetup.exe (~60-70MB setelah kompresi LZMA)
 
 #define AppName "Nio Chat"
-#define AppVersion "1.0.0"
+#define AppVersion "1.0.1"
 #define AppPublisher "Nio"
 #define AppExeName "NioChat.exe"
 #define SourceDir "app_publish"

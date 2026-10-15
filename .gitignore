@@ -12,6 +12,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+installer/
 
 # Visual Studio files
 .vs/
