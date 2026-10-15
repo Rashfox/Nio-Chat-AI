@@ -39,3 +39,9 @@ coverage/
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# Publish output (generated, not source)
+app_publish/
+
+# Temp scripts
+make_ico.ps1
