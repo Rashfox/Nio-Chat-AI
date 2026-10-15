@@ -47,4 +47,6 @@ app_publish/
 make_ico.ps1
 fix_ico.ps1
 nio_source.*
+*.bat
+
 
