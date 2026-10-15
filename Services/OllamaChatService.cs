@@ -5,13 +5,24 @@ namespace blazor.Services;
 
 public sealed class OllamaChatService(HttpClient httpClient, IConfiguration configuration, IHostEnvironment environment)
 {
-    public async Task<string> SendAsync(IReadOnlyList<OllamaChatMessage> messages, CancellationToken cancellationToken = default)
+    public async Task<string> SendAsync(IReadOnlyList<OllamaChatMessage> messages, string? userName = null, CancellationToken cancellationToken = default)
     {
         var model = configuration["Ollama:Model"] ?? "rash5679/nio";
+
+        var chatMessages = new List<OllamaChatMessage>();
+        if (!string.IsNullOrWhiteSpace(userName))
+        {
+            chatMessages.Add(new OllamaChatMessage(
+                "system",
+                $"Kamu adalah Nio, asisten AI pribadi yang ramah, cerdas, dan membantu. Pengguna yang sedang berbicara denganmu bernama {userName.Trim()}. Sapa atau panggil pengguna dengan nama {userName.Trim()} secara natural saat menjawab."
+            ));
+        }
+        chatMessages.AddRange(messages);
+
         var request = new
         {
             model,
-            messages,
+            messages = chatMessages,
             stream = false
         };
 

@@ -11,6 +11,22 @@
 <PageTitle>Nio Chat</PageTitle>
 
 <div class="chat-shell @(isDarkMode ? "dark-mode" : "")">
+	@if (showOnboarding)
+	{
+		<div class="onboarding-backdrop">
+			<div class="onboarding-card">
+				<div class="onboarding-avatar">
+					<img src="favicon.png" alt="Nio Mascot" />
+				</div>
+				<h2>Hai! Aku Nio 👋</h2>
+				<p>Sebelum kita mulai, siapa nama panggilanmu? Aku akan menyapamu dengan nama ini.</p>
+				<div class="onboarding-form">
+					<input @bind="onboardingInput" @onkeydown="HandleOnboardingKeyDown" placeholder="Nama panggilanmu (misal: Rash)" maxlength="30" autofocus />
+					<button type="button" class="onboarding-submit" @onclick="SubmitOnboarding" disabled="@string.IsNullOrWhiteSpace(onboardingInput)">Mulai Mengobrol ✨</button>
+				</div>
+			</div>
+		</div>
+	}
 	@if (sidebarOpen)
 	{
 		<div class="sidebar-backdrop" @onclick="ToggleSidebar"></div>
@@ -18,7 +34,13 @@
 	<aside class="chat-sidebar @(sidebarOpen ? "sidebar-open" : "")">
 		<div class="sidebar-header">
 			<strong>Riwayat chat</strong>
-			<button class="sidebar-close" type="button" @onclick="ToggleSidebar" aria-label="Tutup menu">×</button>
+			<div class="sidebar-header-actions">
+				@if (sessions.Count > 0)
+				{
+					<button class="sidebar-clear-btn" type="button" @onclick="ClearAllHistory" title="Hapus semua riwayat">🗑️</button>
+				}
+				<button class="sidebar-close" type="button" @onclick="ToggleSidebar" aria-label="Tutup menu">×</button>
+			</div>
 		</div>
 		<button class="sidebar-new-chat" type="button" @onclick="StartNewChat">+ Chat baru</button>
 		<div class="session-list">
@@ -46,6 +68,10 @@
 		</div>
 		<div class="header-actions">
 			<span class="model-pill"><span class="status-dot"></span>@modelName</span>
+			@if (!string.IsNullOrWhiteSpace(userName))
+			{
+				<button class="user-pill" type="button" @onclick="OpenEditName" title="Ubah nama panggilan">👤 @userName</button>
+			}
 			@if (activeSession is not null)
 			{
 				<button class="session-name-button" type="button" @onclick="BeginRenameSession" title="Edit nama percakapan">@activeSession.Title</button>
@@ -67,7 +93,14 @@
 		{
 			<section class="welcome-panel">
 				<span class="welcome-kicker">PRIVATE. FAST. YOURS.</span>
-				<h2>Ngobrol dengan model AI<br />yang berjalan di mesinmu.</h2>
+				@if (!string.IsNullOrWhiteSpace(userName))
+				{
+					<h2>Halo, @userName! 👋<br />Ada yang bisa Nio bantu?</h2>
+				}
+				else
+				{
+					<h2>Ngobrol dengan model AI<br />yang berjalan di mesinmu.</h2>
+				}
 				<p>Ajukan pertanyaan, minta ide, atau jelajahi sesuatu yang baru. Percakapanmu tetap lokal melalui Nio.</p>
 				<div class="prompt-grid">
                     @foreach (var prompt in activePrompts)
@@ -125,6 +158,9 @@
 	private bool shouldScrollToLatest;
 	private string renameValue = string.Empty;
 	private string? activeSessionId;
+	private string userName = string.Empty;
+	private bool showOnboarding;
+	private string onboardingInput = string.Empty;
 	private ElementReference conversationElement;
 	private ElementReference composerInput;
 	private ChatSession? activeSession => sessions.FirstOrDefault(session => session.Id == activeSessionId);
@@ -139,10 +175,17 @@
 			}
 			catch { }
 
+			userName = StorageService.GetUserName() ?? string.Empty;
+			if (string.IsNullOrWhiteSpace(userName))
+			{
+				showOnboarding = true;
+			}
+
 			// Load history dari file (permanen, tidak bergantung pada cache WebView2)
 			var savedSessions = StorageService.LoadSessions();
 			if (savedSessions.Count > 0)
 			{
+				hasSavedHistory = true;
 				foreach (var s in savedSessions)
 				{
 					var msgs = s.Messages.Select(m => new ChatMessage(m.Role, m.Content)).ToList();
@@ -159,6 +202,44 @@
 			shouldScrollToLatest = false;
 			await JS.InvokeVoidAsync("chatStorage.scrollToLatest", conversationElement);
 		}
+	}
+
+	private void SubmitOnboarding()
+	{
+		var trimmed = onboardingInput.Trim();
+		if (!string.IsNullOrWhiteSpace(trimmed))
+		{
+			userName = trimmed;
+			StorageService.SaveUserName(userName);
+			showOnboarding = false;
+			StateHasChanged();
+		}
+	}
+
+	private void HandleOnboardingKeyDown(KeyboardEventArgs args)
+	{
+		if (args.Key == "Enter")
+		{
+			SubmitOnboarding();
+		}
+	}
+
+	private void OpenEditName()
+	{
+		onboardingInput = userName;
+		showOnboarding = true;
+		StateHasChanged();
+	}
+
+	private async Task ClearAllHistory()
+	{
+		StorageService.ClearHistory();
+		try { await JS.InvokeVoidAsync("chatStorage.clear"); } catch { }
+		sessions.Clear();
+		messages.Clear();
+		CreateEmptySession();
+		hasSavedHistory = false;
+		StateHasChanged();
 	}
 
 	private async Task SendMessage()
@@ -194,7 +275,7 @@
 			var ollamaMessages = messages
 				.Select(message => new OllamaChatMessage(message.Role, message.Content))
 				.ToArray();
-			var assistantMessage = await ChatService.SendAsync(ollamaMessages);
+			var assistantMessage = await ChatService.SendAsync(ollamaMessages, userName);
 			messages.Add(new ChatMessage("assistant", assistantMessage));
 			shouldScrollToLatest = true;
 			UpdateSessionFromMessages();

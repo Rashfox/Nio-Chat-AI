@@ -40,6 +40,10 @@ UninstallDisplayName={#AppName}
 DisableProgramGroupPage=yes
 ; Tidak perlu restart
 RestartIfNeededByRun=no
+; Tutup aplikasi otomatis jika sedang berjalan saat install / update
+CloseApplications=yes
+CloseApplicationsFilter=*NioChat.exe*
+UsedUserAreasWarning=no
 ; Tampilkan lisensi (opsional)
 ; LicenseFile=LICENSE
 
@@ -67,3 +71,9 @@ Filename: "{app}\{#AppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(
 [UninstallRun]
 ; Matikan aplikasi sebelum uninstall
 Filename: "taskkill.exe"; Parameters: "/F /IM {#AppExeName}"; Flags: runhidden skipifdoesntexist; RunOnceId: "KillNioChat"
+
+[UninstallDelete]
+; Hapus data riwayat & profil agar fresh install benar-benar bersih
+Type: filesandordirs; Name: "{userappdata}\NioChat"
+Type: filesandordirs; Name: "{localappdata}\NioChat"
+

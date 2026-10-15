@@ -10,6 +10,7 @@ public class ChatStorageService
         "NioChat");
 
     private static readonly string HistoryFile = Path.Combine(StorageDir, "history.json");
+    private static readonly string ProfileFile = Path.Combine(StorageDir, "profile.json");
 
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
@@ -17,6 +18,47 @@ public class ChatStorageService
         WriteIndented = true,
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
     };
+
+    public string? GetUserName()
+    {
+        try
+        {
+            if (!File.Exists(ProfileFile))
+                return null;
+
+            var json = File.ReadAllText(ProfileFile);
+            var profile = JsonSerializer.Deserialize<UserProfileData>(json, JsonOptions);
+            return string.IsNullOrWhiteSpace(profile?.UserName) ? null : profile.UserName.Trim();
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    public void SaveUserName(string userName)
+    {
+        try
+        {
+            Directory.CreateDirectory(StorageDir);
+            var profile = new UserProfileData { UserName = userName.Trim() };
+            var json = JsonSerializer.Serialize(profile, JsonOptions);
+            File.WriteAllText(ProfileFile, json);
+        }
+        catch { }
+    }
+
+    public void ClearHistory()
+    {
+        try
+        {
+            if (File.Exists(HistoryFile))
+            {
+                File.Delete(HistoryFile);
+            }
+        }
+        catch { }
+    }
 
     public List<ChatSessionData> LoadSessions()
     {
@@ -45,6 +87,11 @@ public class ChatStorageService
         }
         catch { }
     }
+}
+
+public class UserProfileData
+{
+    public string UserName { get; set; } = string.Empty;
 }
 
 public class ChatSessionData
