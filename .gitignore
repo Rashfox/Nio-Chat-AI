@@ -43,5 +43,8 @@ Thumbs.db
 # Publish output (generated, not source)
 app_publish/
 
-# Temp scripts
+# Temp scripts and source assets
 make_ico.ps1
+fix_ico.ps1
+nio_source.*
+

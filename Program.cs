@@ -30,6 +30,7 @@ class Program
                 UseShellExecute = false,
                 CreateNoWindow = true
             };
+            startInfo.Environment["OLLAMA_NUM_THREADS"] = Environment.ProcessorCount.ToString();
             try
             {
                 Process.Start(startInfo);
